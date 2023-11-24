@@ -14,6 +14,7 @@
 #include "memlib.h"
 #include "config.h"
 
+
 /* private variables */
 static char *mem_start_brk;  /* points to first byte of heap */
 static char *mem_brk;        /* points to last byte of heap */
@@ -55,11 +56,11 @@ void mem_reset_brk()
  *    by incr bytes and returns the start address of the new area. In
  *    this model, the heap cannot be shrunk.
  */
-void *mem_sbrk(int incr) 
+void *mem_sbrk(int incr) //메모리 할당이 성공됐는지 오류나는지 알려주고 성공하면 이전의 브레이크값 반환
 {
     char *old_brk = mem_brk;
 
-    if ( (incr < 0) || ((mem_brk + incr) > mem_max_addr)) {
+    if ( (incr < 0) || ((mem_brk + incr) > mem_max_addr)) {//incr 음수면 error,  
 	errno = ENOMEM;
 	fprintf(stderr, "ERROR: mem_sbrk failed. Ran out of memory...\n");
 	return (void *)-1;
